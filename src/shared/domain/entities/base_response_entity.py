@@ -1,5 +1,7 @@
 class BaseResponseEntity:
-    def __init__(self, data: dict | None, success: bool, message: str, status_code: int):
+    def __init__(
+        self, data: dict | None, success: bool, message: str, status_code: int
+    ):
         self.data = data
         self.success = success
         self.message = message
