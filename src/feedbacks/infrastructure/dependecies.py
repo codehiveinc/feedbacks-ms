@@ -1,0 +1,10 @@
+from src.feedbacks.infrastructure.adapters.repositories.feedback_repository_adapter import FeedbackRepositoryAdapter
+from src.feedbacks.application.use_cases.create_feedback_use_case import CreateFeedbackUseCase
+from src.feedbacks.application.use_cases.list_feedback_use_case import ListFeedbackUseCase
+from src.shared.infrastructure.database.session import db
+
+
+feedback_repository = FeedbackRepositoryAdapter(db)
+
+create_feedback_use_case = CreateFeedbackUseCase(feedback_repository)
+list_feedback_use_case = ListFeedbackUseCase(feedback_repository)
