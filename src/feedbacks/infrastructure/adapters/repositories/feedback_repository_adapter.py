@@ -7,6 +7,7 @@ from src.feedbacks.infrastructure.models.feedback_model import FeedbackModel
 from src.shared.domain.entities.pagination_response_entity import (
     PaginationResponseEntity,
 )
+from src.feedbacks.infrastructure.utils.feedback_analyzer import analyze_sentiment
 
 
 class FeedbackRepositoryAdapter(FeedbackRepositoryPort):
@@ -83,3 +84,7 @@ class FeedbackRepositoryAdapter(FeedbackRepositoryPort):
         )
 
         return response
+
+
+    def analyze_meal_feedback(self, content: str):
+        return analyze_sentiment(content)

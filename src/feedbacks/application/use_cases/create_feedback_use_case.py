@@ -13,12 +13,13 @@ class CreateFeedbackUseCase:
 
     def execute(self, content: str, author_uuid: str, meal_uuid: str) -> FeedbackEntity | None:
         feedback_uuid = str(uuid.uuid4())
+        rating = self.feedback_repositoy.analyze_meal_feedback(content)
         feedback_entity = FeedbackEntity(
             uuid=feedback_uuid,
             content=content,
             user_uuid=author_uuid,
             meal_uuid=meal_uuid,
-            rating=RatingEnum.GOOD,
+            rating=rating,
             id=None,
             created_at=None,
             updated_at=None,

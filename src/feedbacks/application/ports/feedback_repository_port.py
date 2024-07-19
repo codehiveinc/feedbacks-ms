@@ -15,3 +15,7 @@ class FeedbackRepositoryPort(ABC):
         self, meal_uuid: str, page_number: int, page_size: int
     ) -> list[FeedbackEntity]:
         pass
+
+    @abstractmethod
+    def analyze_meal_feedback(self, content: str):
+        pass
