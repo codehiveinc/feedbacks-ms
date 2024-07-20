@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY requirements.txt requirements.txt
 
-RUN pip install --cache-dir=/data/vincents/ --build /data/fastmeal/ -r /app/requirements.txt
+RUN pip install requirements.txt
 
 
 
