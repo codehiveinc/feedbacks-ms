@@ -11,11 +11,22 @@ pipeline {
             }
         }
 
+        stage('Prepare .env file') {
+            steps {
+                script {
+                    withCredentials([string(credentialsId: 'envFeedbacks', variable: 'ENV_FILE_CONTENT')]) {
+                        // Crear el archivo .env
+                        writeFile(file: '.env', text: "${ENV_FILE_CONTENT}")
+                    }
+                }
+            }
+        }
+
         stage('Build and Run Docker') {
             steps {
                 script {
                     sh 'docker build -t feedbacks-ms .'
-                    sh 'docker run -d -p 8000:8000 --name feedbacks-ms-container feedbacks-ms'
+                    sh 'docker run -d -p 8000:8000 --name feedbacks-ms-container --env-file .env feedbacks-ms'
                 }
             }
         }
