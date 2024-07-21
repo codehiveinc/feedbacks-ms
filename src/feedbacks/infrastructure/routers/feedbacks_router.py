@@ -33,7 +33,7 @@ def list_feedbacks(
 @app.post("/feedbacks", status_code=201)
 def create_feedback(
     feedback: Annotated[FeedbackCreate, Body(embed=False)],
-    current_user: Annotated[str, Depends(get_current_user)] = None,
+    
 ):
     request = feedback.model_dump()
     data = feedback_controller.create_feedback(request)

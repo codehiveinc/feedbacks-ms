@@ -1,39 +1,35 @@
-from transformers import BertTokenizer, BertForSequenceClassification
-import torch
-
+import requests
 from src.feedbacks.domain.enums.rating_enum import RatingEnum
 
-tokenizer = BertTokenizer.from_pretrained(
-    "nlptown/bert-base-multilingual-uncased-sentiment"
-)
-model = BertForSequenceClassification.from_pretrained(
-    "nlptown/bert-base-multilingual-uncased-sentiment"
-)
+API_URL = "https://r1w8d62lswudbn4r.us-east-1.aws.endpoints.huggingface.cloud"
 
-num_classes = 5
-sentiment_classes = ["Too Bad", "Bad", "Neutral", "Good", "Excellent"]
-
-
-def get_rating_enum(result: str):
-    if result == "Too Bad":
+def get_rating_enum(score: float):
+    if score >= 0 and score <= 0.2:
         return RatingEnum.TOO_BAD
-    if result == "Bad":
+    elif score > 0.2 and score <= 0.4:
         return RatingEnum.BAD
-    if result == "Neutral":
+    elif score > 0.4 and score <= 0.6:
         return RatingEnum.REGULAR
-    if result == "Good":
+    elif score > 0.6 and score <= 0.8:
         return RatingEnum.GOOD
-    if result == "Excellent":
+    elif score > 0.8 and score <= 1:
         return RatingEnum.EXCELLENT
     return RatingEnum.REGULAR
 
-
 def analyze_sentiment(text: str):
-    inputs = tokenizer(text, return_tensors="pt")
-    outputs = model(**inputs)
-    logits = outputs.logits
-    sentiment_result = torch.argmax(logits, dim=1).item()
-
-    result = sentiment_classes[sentiment_result]
-
-    return get_rating_enum(result)
+    data = {
+        "inputs": text,
+        "parameters": {}
+    }
+    
+    response = requests.post(API_URL, headers={
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }, json=data)
+    
+    if response.status_code == 200:
+        result = response.json()
+        score = result[0]['score']  
+        return get_rating_enum(score)
+    else:
+        raise Exception(f"Request failed with status code {response.status_code}: {response.text}")

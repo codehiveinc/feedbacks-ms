@@ -1,4 +1,4 @@
-from .config import *
+from src.config import *
 from src.shared.infrastructure.database.base import Base
 from src.shared.infrastructure.database.session import engine
 
