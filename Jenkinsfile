@@ -5,8 +5,8 @@ pipeline {
         stage('Clean old containers') {
             steps {
                 script {
-                    sh 'docker stop users-ms-container || true'
-                    sh 'docker rm users-ms-container || true'
+                    sh 'docker stop feedbacks-ms-container || true'
+                    sh 'docker rm feedbacks-ms-container || true'
                 }
             }
         }
@@ -14,8 +14,8 @@ pipeline {
         stage('Build and Run Docker') {
             steps {
                 script {
-                    sh 'docker build -t users-ms .'
-                    sh 'docker run -d -p 3000:3000 --name users-ms-container users-ms'
+                    sh 'docker build -t feedbacks-ms .'
+                    sh 'docker run -d -p 8000:8000 --name feedbacks-ms-container feedbacks-ms'
                 }
             }
         }
