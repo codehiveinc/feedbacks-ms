@@ -1,5 +1,5 @@
 FROM python:3.12.4-slim
-RUN pip install requests 
+RUN pip install requests
 
 WORKDIR /app
 

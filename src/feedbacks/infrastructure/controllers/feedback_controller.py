@@ -17,7 +17,7 @@ class FeedbackController:
     def create_feedback(self, feedback: dict) -> dict | None:
         return self.create_feedback_use_case.execute(
             content=feedback["content"],
-            author_uuid=feedback["author_uuid"],
+            author_uuid=feedback["user_uuid"],
             meal_uuid=feedback["meal_uuid"],
         )
 

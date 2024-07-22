@@ -9,7 +9,7 @@ from src.feedbacks.infrastructure.schemas.feedback_schema import FeedbackCreate
 from src.auth.infrastructure.dependecies.get_current_user import get_current_user
 
 
-@app.get("/feedbacks/meal_uuid/{meal_uuid}", status_code=200)
+@app.get("/api/v1/feedbacks/meal_uuid/{meal_uuid}/", status_code=200)
 def list_feedbacks(
     meal_uuid: str,
     number_page: int = 1,
@@ -30,10 +30,9 @@ def list_feedbacks(
     return response.dict()
 
 
-@app.post("/feedbacks", status_code=201)
+@app.post("/api/v1/feedbacks/", status_code=201)
 def create_feedback(
     feedback: Annotated[FeedbackCreate, Body(embed=False)],
-    
 ):
     request = feedback.model_dump()
     data = feedback_controller.create_feedback(request)
