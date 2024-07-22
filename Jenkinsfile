@@ -15,7 +15,7 @@ pipeline {
             steps {
                 script {
                     withCredentials([string(credentialsId: 'envFeedbacks', variable: 'ENV_FILE_CONTENT')]) {
-                        // Crear el archivo .env
+                        
                         writeFile(file: '.env', text: "${ENV_FILE_CONTENT}")
                     }
                 }
